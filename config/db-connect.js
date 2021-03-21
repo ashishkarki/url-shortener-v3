@@ -17,7 +17,7 @@ const connectToDB = async () => {
 
         console.log(`Mongo Atlas connected: ${ conn.connection.host }`.magenta.underline.bold)
     } catch (error) {
-        console.log(`There was an error ${ error.message }`.red.bgWhite.bold)
+        console.log(`There was an error. Reason: ${ error.message }`.red.bgWhite.bold)
         process.exit(1)
     }
 }
