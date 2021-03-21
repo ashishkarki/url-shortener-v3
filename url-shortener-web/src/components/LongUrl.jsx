@@ -9,6 +9,8 @@ import {
   Button,
   FormLabel,
   CardHeader,
+  Typography,
+  Link,
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
@@ -20,9 +22,28 @@ const useStyles = makeStyles({
     border: 0,
     borderRadius: 3,
     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-    color: 'white',
+    color: 'whitesmoke',
     padding: '0 30px',
     textAlign: 'center',
+    // height: '90vh',
+  },
+  header: {
+    font: '3rem bold',
+    textDecoration: 'underline',
+  },
+  labelHide: {
+    display: 'none',
+  },
+  labelShow: {
+    margin: '1rem',
+    padding: '0.5rem',
+    color: '#1ed65f',
+    fontSize: '1.3rem',
+    fontStyle: 'italic',
+    display: 'block',
+  },
+  link: {
+    margin: 'auto 5px',
   },
 })
 
@@ -34,8 +55,24 @@ function LongUrl() {
       <Container maxWidth='md'>
         <Card className={classes.root}>
           <CardHeader
-            title="Common person's URL Shortener"
-            subheader='September 14, 2016'
+            title={
+              <Typography className={classes.header}>
+                Common person's URL Shortener
+              </Typography>
+            }
+            subheader={
+              <Typography>
+                Built by
+                <Link
+                  href='https://www.linkedin.com/in/ashish-karki'
+                  target='_blank'
+                  rel='noopener'
+                  className={classes.link}
+                >
+                  ASHISH KARKI
+                </Link>
+              </Typography>
+            }
           />
 
           <CardContent>
@@ -54,9 +91,10 @@ function LongUrl() {
                 Shorten Url
               </Button>
 
-              <div style={{ margin: '1rem', border: '2px solid black' }}>
-                <FormLabel children='Short Url' />
-              </div>
+              <FormLabel
+                children='Short Url'
+                className={`${true ? classes.labelShow : classes.labelHide}`}
+              />
             </FormControl>
           </CardContent>
         </Card>
