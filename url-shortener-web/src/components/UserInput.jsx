@@ -1,4 +1,11 @@
 import React, { useState } from 'react'
+import "primeicons/primeicons.css"
+import "primereact/resources/themes/saga-blue/theme.css"
+import "primereact/resources/primereact.css"
+import "primeflex/primeflex.css"
+
+import { InputText } from "primereact/inputtext"
+import { Button } from "primereact/button"
 
 function UserInput() {
     const [ longUrl, setLongUrl ] = useState('')
@@ -9,28 +16,23 @@ function UserInput() {
     }
 
     return (
-        <article>
-            {/* <div className='card'>
-                <div className='card-body'> */}
-            <form className='url-form'
-                onSubmit={ e => submitHandler(e) }>
-                <div className='form-control'>
-                    <label htmlFor='longUrl'>Enter a Long Url below:</label>
-                    <input type='text'
-                        id='longUrl'
-                        value={ longUrl }
-                        onChange={ (e) => setLongUrl(e.target.value) }
-                    />
+        <div>
+            <div className="card">
+                <h3>Enter Long Url and Click Button</h3>
+                <div className="p-grid p-fluid">
+                    <div className="p-col-12 p-md-4">
+                        <div className="p-inputgroup">
+                            <span className="p-inputgroup-addon">
+                                <i className="pi pi-link"></i>
+                            </span>
+                            <InputText placeholder="Type or Paste Long Url" />
+                        </div>
+                    </div>
                 </div>
 
-                <button className="btn"
-                    onClick={ e => submitHandler(e) }>
-                    Get Shortened URL!
-                </button>
-            </form>
-            {/* </div>
-            </div> */}
-        </article>
+                <Button label="Shorten Url" className="p-button-raised p-button-rounded" />
+            </div>
+        </div>
     )
 }
 
