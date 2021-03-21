@@ -1,0 +1,4 @@
+node_modules
+url-shortener-web\node_modules
+
+config/development.json
