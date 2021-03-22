@@ -3,6 +3,9 @@ import { CardHeader, Typography, Link } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles({
+  header: {
+    textAlign: 'center',
+  },
   title: {
     font: '3rem bold',
     textDecoration: 'underline',
@@ -21,9 +24,12 @@ function CustomHeader() {
   return (
     <>
       <CardHeader
+        className={classes.header}
         title={
           <Typography className={classes.title}>
-            Url Shortener
+            <Link href='#' className={classes.link}>
+              ShineyUrl: Url Shortener
+            </Link>
           </Typography>
         }
         subheader={

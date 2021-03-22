@@ -4,12 +4,13 @@ import { makeStyles } from '@material-ui/core/styles'
 import CustomHeader from './components/CustomHeader'
 import CustomForm from './components/CustomForm'
 import UrlListTable from './components/UrlListTable'
-import StickyHeadTable from './components/StickyHeadTable'
+import { GlobalProvider } from './context/GlobalContext'
 
 const useStyles = makeStyles({
   container: {
     display: 'flex',
     flexDirection: 'row',
+    flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'space-evenly',
   },
@@ -19,15 +20,15 @@ function App() {
   const classes = useStyles()
 
   return (
-    <>
+    <GlobalProvider>
       <CustomHeader />
 
       <Container className={classes.container}>
         <CustomForm />
 
-        <StickyHeadTable />
+        <UrlListTable />
       </Container>
-    </>
+    </GlobalProvider>
   )
 }
 

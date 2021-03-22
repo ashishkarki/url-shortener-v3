@@ -50,6 +50,31 @@ app.get(`${API_BASE_URI}/:shortUrl`, async (req, res) => {
 })
 
 /**
+ * Description: Delete one Url entry from DB
+ * Route: DELETE /api/v3/urls/:id
+ */
+app.delete(`${API_BASE_URI}/:deletedId`, async (req, res) => {
+  try {
+    const { deletedId } = req.params
+
+    const url = await Url.findById(deletedId)
+
+    if (!url) {
+      return res.status(404).json({
+        success: false,
+        error: `Error: Url Not Found!!`,
+      })
+    }
+
+    await url.remove()
+
+    return buildSuccessResponse(res, deletedId)
+  } catch (error) {
+    return buildErrorResponse(res, error)
+  }
+})
+
+/**
  * Description: shorten a given longUrl with 10-character urlId or code
  * Route: POST /api/v3/urls/shorten
  */
@@ -57,6 +82,8 @@ app.post(`${API_BASE_URI}/shorten`, async (req, res) => {
   try {
     const { longUrl } = req.body
     const urlObjWithoutShortUrl = await Url.create({ longUrl: longUrl })
+
+    // insert shortUrl into this urlObjWithoutShortUrl
     await Url.updateOne(
       { _id: urlObjWithoutShortUrl._id },
       { shortUrl: `${BASE_URL}${API_BASE_URI}/${urlObjWithoutShortUrl.urlId}` }
@@ -72,11 +99,13 @@ app.post(`${API_BASE_URI}/shorten`, async (req, res) => {
 const buildSuccessResponse = (res, responseData, statusCode = 200) => {
   let responseObj = {
     success: true,
-    data: responseData,
   }
 
   if (Array.isArray(responseData)) {
     responseObj['count'] = responseData.length
+    responseObj['data'] = responseData.map(eachRow => eachRow._doc)
+  } else {
+    responseObj['data'] = responseData
   }
 
   return res.status(statusCode).json(responseObj)

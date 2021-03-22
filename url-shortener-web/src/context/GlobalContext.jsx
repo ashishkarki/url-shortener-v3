@@ -2,8 +2,9 @@ import { useReducer } from 'react'
 import { createContext } from 'react'
 import axios from 'axios'
 import AppReducer from './AppReducer'
-import { API_BASE_URI, POST_REQUEST_COFIG } from '../../../utils/constants'
+import { API_BASE_URI, POST_REQUEST_COFIG } from '../utils/constants'
 import { ACTION_TYPES } from './Actions'
+import { useCallback } from 'react'
 
 const initialState = {
   urls: [
@@ -37,12 +38,24 @@ export const GlobalProvider = ({ children }) => {
   }
 
   // Get all Shortened Urls so far
-  const getUrls = async () => {
+  const getUrls = useCallback(async () => {
     try {
       const response = await axios.get(API_BASE_URI)
 
-      _dispatchAction(ACTION_TYPES.GET_URLS, response.data)
-    } catch (error) {}
+      _dispatchAction(ACTION_TYPES.GET_URLS, response.data.data)
+    } catch (error) {
+      _dispatchAction(ACTION_TYPES.URL_ERROR, error)
+    }
+  }, [])
+
+  const deleteUrl = async deletedId => {
+    try {
+      const response = await axios.delete(`${API_BASE_URI}/${deletedId}`)
+
+      _dispatchAction(ACTION_TYPES.DELETE_URL, response.data.data)
+    } catch (error) {
+      _dispatchAction(ACTION_TYPES.URL_ERROR, error)
+    }
   }
 
   const _dispatchAction = (
@@ -59,6 +72,8 @@ export const GlobalProvider = ({ children }) => {
     <GlobalContext.Provider
       value={{
         urls: globalState.urls,
+        getShortenedUrl,
+        deleteUrl,
         getUrls,
       }}
     >
