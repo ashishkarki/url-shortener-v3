@@ -1,12 +1,31 @@
 import './App.css'
-import LongUrl from './components/LongUrl'
+import { Container } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
+import CustomHeader from './components/CustomHeader'
+import CustomForm from './components/CustomForm'
+
+const useStyles = makeStyles({
+  container: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+  },
+})
 
 function App() {
+  const classes = useStyles()
+
   return (
+    // <CustomContainer />
     <>
-      <div className="container">
-        <LongUrl />
-      </div>
+      <CustomHeader />
+
+      <Container className={classes.container}>
+        <CustomForm />
+
+        <CustomForm />
+      </Container>
     </>
   )
 }

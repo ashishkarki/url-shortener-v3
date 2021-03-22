@@ -3,28 +3,31 @@ import { CardHeader, Typography, Link } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles({
-  header: {
+  title: {
     font: '3rem bold',
     textDecoration: 'underline',
+  },
+  subheader: {
+    margin: '1rem auto',
   },
   link: {
     margin: 'auto 5px',
   },
 })
 
-function Header() {
+function CustomHeader() {
   const classes = useStyles()
 
   return (
     <>
       <CardHeader
         title={
-          <Typography className={classes.header}>
-            Common person's URL Shortener
+          <Typography className={classes.title}>
+            Url Shortener
           </Typography>
         }
         subheader={
-          <Typography>
+          <Typography className={classes.subheader}>
             Built by
             <Link
               href='https://www.linkedin.com/in/ashish-karki'
@@ -41,4 +44,4 @@ function Header() {
   )
 }
 
-export default Header
+export default CustomHeader
