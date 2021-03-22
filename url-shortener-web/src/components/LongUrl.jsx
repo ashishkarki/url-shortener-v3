@@ -1,6 +1,8 @@
 import React from 'react'
 import { FormLabel } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
+import { useContext } from 'react'
+import { GlobalContext } from '../context/GlobalContext'
 
 const useStyles = makeStyles({
   labelHide: {
@@ -18,6 +20,7 @@ const useStyles = makeStyles({
 
 function LongUrl() {
   const classes = useStyles()
+  const { getShortenedUrl } = useContext(GlobalContext)
 
   return (
     <>

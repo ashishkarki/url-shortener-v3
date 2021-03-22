@@ -11,12 +11,13 @@ import TableRow from '@material-ui/core/TableRow'
 import { GlobalContext } from '../context/GlobalContext'
 import axios from 'axios'
 import { DeleteForever } from '@material-ui/icons/'
+import LaunchIcon from '@material-ui/icons/Launch'
 
 //// Reference for source code: https://material-ui.com/components/tables/#table
 
 const columns = [
   { id: 'longUrl', label: 'Long Url' }, //, minWidth: 170
-  { id: 'shortUrl', label: 'Shortened Url' }, //, minWidth: 100
+  { id: 'shortUrl', label: 'Shortened Url ID' }, //, minWidth: 100
   { id: 'createdAt', label: 'Date Created' },
 ]
 
@@ -55,8 +56,13 @@ export default function UrlListTable() {
   }
 
   const deleteUrlRow = deletedId => {
-    console.log(`Delete row with id ${deletedId}`)
     deleteUrl(deletedId)
+  }
+
+  const launchLongUrl = longUrl => {
+    console.log(`lauch row with id ${longUrl}`)
+    const newWindow = window.open(longUrl, '_blank', 'noreferrer')
+    if (newWindow) newWindow.opener = null
   }
 
   useEffect(() => {
@@ -86,6 +92,7 @@ export default function UrlListTable() {
                 </TableCell>
               ))}
 
+              <TableCell className={classes.head}>Launch</TableCell>
               <TableCell className={classes.head}>Delete?</TableCell>
             </TableRow>
           </TableHead>
@@ -98,6 +105,20 @@ export default function UrlListTable() {
                   <TableRow hover role='checkbox' tabIndex={-1} key={row._id}>
                     {columns.map(column => {
                       const curRowcurColValue = row[column.id]
+
+                      // <TODO>Bad Hack: remove later - make parameterized</TODO>
+                      if (column.id === 'shortUrl') {
+                        return (
+                          <TableCell key={column.id} align={column.align}>
+                            <span className='shortUrlId'>
+                              {curRowcurColValue.substring(
+                                curRowcurColValue.lastIndexOf('/') + 1
+                              )}
+                            </span>
+                          </TableCell>
+                        )
+                      }
+
                       return (
                         <TableCell key={column.id} align={column.align}>
                           {column.format &&
@@ -107,6 +128,10 @@ export default function UrlListTable() {
                         </TableCell>
                       )
                     })}
+
+                    <TableCell onClick={() => launchLongUrl(row.longUrl)}>
+                      <LaunchIcon />
+                    </TableCell>
 
                     <TableCell onClick={() => deleteUrlRow(row._id)}>
                       <DeleteForever />
