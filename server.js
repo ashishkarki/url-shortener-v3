@@ -1,7 +1,11 @@
 const express = require('express')
 const colors = require('colors')
 
-const { NODE_ENV_OPTIONS, DEFAULT_SERVER_PORT } = require('./utils/constants')
+const {
+  NODE_ENV_OPTIONS,
+  DEFAULT_SERVER_PORT,
+  API_BASE_URI,
+} = require('./utils/constants')
 const Url = require('./models/Url')
 const connectToDB = require('./config/db-connect')
 
@@ -14,9 +18,9 @@ app.use(express.json())
 
 /**
  * Description: get a list of all Shortened URLs`
- * Route: GET /
+ * Route: GET /api/v3/urls/
  */
-app.get('/', async (req, res) => {
+app.get(`${API_BASE_URI}/`, async (req, res) => {
   try {
     const allShortenedUrls = await Url.find()
 
@@ -28,9 +32,9 @@ app.get('/', async (req, res) => {
 
 /**
  * Description: get/redirect the client to corresponding longUrl
- * Route: GET /:shortUrl
+ * Route: GET /api/v3/urls/:shortUrl
  */
-app.get('/:shortUrl', async (req, res) => {
+app.get(`${API_BASE_URI}/:shortUrl`, async (req, res) => {
   try {
     const { shortUrl } = req.params
     const url = await Url.findOne({ urlId: shortUrl })
@@ -43,9 +47,9 @@ app.get('/:shortUrl', async (req, res) => {
 
 /**
  * Description: shorten a given longUrl with 10-character urlId or code
- * Route: POST /shorten
+ * Route: POST /api/v3/urls/shorten
  */
-app.post('/api/v3/shorten', async (req, res) => {
+app.post(`${API_BASE_URI}/shorten`, async (req, res) => {
   try {
     const { longUrl } = req.body
     const urlObj = await Url.create({ longUrl: longUrl })
