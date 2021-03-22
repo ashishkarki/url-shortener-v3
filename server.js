@@ -1,5 +1,8 @@
 const express = require('express')
 const colors = require('colors')
+const config = require('config')
+
+const BASE_URL = config.get('baseUrl')
 
 const {
   NODE_ENV_OPTIONS,
@@ -39,7 +42,8 @@ app.get(`${API_BASE_URI}/:shortUrl`, async (req, res) => {
     const { shortUrl } = req.params
     const url = await Url.findOne({ urlId: shortUrl })
 
-    return buildSuccessResponse(res, url.longUrl)
+    //return buildSuccessResponse(res, url.longUrl)
+    res.redirect(url.longUrl)
   } catch (error) {
     return buildErrorResponse(res, error)
   }
@@ -52,19 +56,30 @@ app.get(`${API_BASE_URI}/:shortUrl`, async (req, res) => {
 app.post(`${API_BASE_URI}/shorten`, async (req, res) => {
   try {
     const { longUrl } = req.body
-    const urlObj = await Url.create({ longUrl: longUrl })
+    const urlObjWithoutShortUrl = await Url.create({ longUrl: longUrl })
+    await Url.updateOne(
+      { _id: urlObjWithoutShortUrl._id },
+      { shortUrl: `${BASE_URL}${API_BASE_URI}/${urlObjWithoutShortUrl.urlId}` }
+    )
+    const finalUrlObj = await Url.findById(urlObjWithoutShortUrl._id)
 
-    return buildSuccessResponse(res, urlObj.urlId)
+    return buildSuccessResponse(res, finalUrlObj)
   } catch (error) {
     return buildErrorResponse(res, error)
   }
 })
 
 const buildSuccessResponse = (res, responseData, statusCode = 200) => {
-  return res.status(statusCode).json({
+  let responseObj = {
     success: true,
     data: responseData,
-  })
+  }
+
+  if (Array.isArray(responseData)) {
+    responseObj['count'] = responseData.length
+  }
+
+  return res.status(statusCode).json(responseObj)
 }
 
 const buildErrorResponse = (res, error, statusCode = 500) => {
