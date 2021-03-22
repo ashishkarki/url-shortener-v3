@@ -23,9 +23,9 @@ app.use(express.json())
  * Description: get a list of all Shortened URLs`
  * Route: GET /api/v3/urls/
  */
-app.get(`${API_BASE_URI}/`, async (req, res) => {
+app.get(`${API_BASE_URI}/`, async (_, res) => {
   try {
-    const allShortenedUrls = await Url.find()
+    const allShortenedUrls = await Url.find().sort({ createdAt: -1 })
 
     return buildSuccessResponse(res, allShortenedUrls)
   } catch (error) {
@@ -81,6 +81,17 @@ app.delete(`${API_BASE_URI}/:deletedId`, async (req, res) => {
 app.post(`${API_BASE_URI}/shorten`, async (req, res) => {
   try {
     const { longUrl } = req.body
+
+    // First confirm if the longUrl already exists in DB
+    const existingUrl = await Url.findOne({ longUrl: longUrl })
+
+    if (existingUrl) {
+      return buildSuccessResponse(
+        res,
+        `LongUrl already converted at timestamp: ${existingUrl.createdAt}`
+      )
+    }
+
     const urlObjWithoutShortUrl = await Url.create({ longUrl: longUrl })
 
     // insert shortUrl into this urlObjWithoutShortUrl

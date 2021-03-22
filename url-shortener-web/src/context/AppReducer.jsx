@@ -9,6 +9,12 @@ const AppReducer = (state, action) => {
         urls: action.payload,
       }
 
+    case ACTION_TYPES.DELETE_URL:
+      return {
+        ...state,
+        urls: state.urls.filter(url => url._id !== action.payload),
+      }
+
     case ACTION_TYPES.URL_ERROR:
       return {
         ...state,
