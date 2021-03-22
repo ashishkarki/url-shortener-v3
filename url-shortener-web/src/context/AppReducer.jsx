@@ -14,6 +14,7 @@ const AppReducer = (state, action) => {
         ...state,
         loading: false,
         urls: [action.payload, ...state.urls],
+        recentShortUrl: action.payload.shortUrl,
       }
 
     case ACTION_TYPES.DELETE_URL:

@@ -9,7 +9,7 @@ import {
   Button,
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import LongUrl from './LongUrl'
+import ShortUrlDisplay from './ShortUrlDisplay'
 import { GlobalContext } from '../context/GlobalContext'
 
 const useStyles = makeStyles({
@@ -27,7 +27,7 @@ const useStyles = makeStyles({
 function CustomForm() {
   const classes = useStyles()
   const [longUrl, setLongUrl] = useState('')
-  const { getShortenedUrl } = useContext(GlobalContext)
+  const { getShortenedUrl, loading } = useContext(GlobalContext)
 
   const shortenUrl = e => {
     e.preventDefault()
@@ -58,7 +58,7 @@ function CustomForm() {
             Shorten Url
           </Button>
 
-          <LongUrl />
+          <ShortUrlDisplay />
         </FormControl>
       </CardContent>
     </Card>

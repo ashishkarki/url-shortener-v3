@@ -15,6 +15,7 @@ const initialState = {
       urlId: '75RT509uEB',
     },
   ],
+  recentShortUrl: '',
   error: null,
   loading: true,
 }
@@ -26,7 +27,6 @@ export const GlobalProvider = ({ children }) => {
   const [globalState, dispatch] = useReducer(AppReducer, initialState)
 
   // Dispatch Actions below:
-  // TODO
   const getShortenedUrl = async longUrl => {
     try {
       const response = await axios.post(
@@ -76,6 +76,7 @@ export const GlobalProvider = ({ children }) => {
     <GlobalContext.Provider
       value={{
         urls: globalState.urls,
+        recentShortUrl: globalState.recentShortUrl,
         getShortenedUrl,
         deleteUrl,
         getUrls,
