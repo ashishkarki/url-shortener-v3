@@ -35,15 +35,15 @@ app.get(`${API_BASE_URI}/`, async (_, res) => {
 
 /**
  * Description: get/redirect the client to corresponding longUrl
- * Route: GET /api/v3/urls/:shortUrl
+ * Route: GET /api/v3/urls/:shortUrl/lengthen
  */
-app.get(`${API_BASE_URI}/:shortUrl`, async (req, res) => {
+app.get(`${API_BASE_URI}/:shortUrl/lengthen`, async (req, res) => {
   try {
     const { shortUrl } = req.params
     const url = await Url.findOne({ urlId: shortUrl })
 
-    //return buildSuccessResponse(res, url.longUrl)
-    res.redirect(url.longUrl)
+    return buildSuccessResponse(res, url.longUrl)
+    //res.redirect(url.longUrl)
   } catch (error) {
     return buildErrorResponse(res, error)
   }
@@ -97,7 +97,7 @@ app.post(`${API_BASE_URI}/shorten`, async (req, res) => {
     // insert shortUrl into this urlObjWithoutShortUrl
     await Url.updateOne(
       { _id: urlObjWithoutShortUrl._id },
-      { shortUrl: `${BASE_URL}${API_BASE_URI}/${urlObjWithoutShortUrl.urlId}` }
+      { shortUrl: `${BASE_URL}/${urlObjWithoutShortUrl.urlId}` }
     )
     const finalUrlObj = await Url.findById(urlObjWithoutShortUrl._id)
 

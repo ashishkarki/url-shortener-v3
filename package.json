@@ -7,7 +7,7 @@
     "start": "node server",
     "serve": "nodemon server",
     "client": "npm start --prefix url-shortener-web",
-    "dev": "concurrently \"npm run serve\" \"npm run client\""
+    "dev": "concurrently \"npx cross-env NODE_ENV=development nodemon server\" \"npm run client\""
   },
   "keywords": [
     "node",

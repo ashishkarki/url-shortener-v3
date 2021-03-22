@@ -107,7 +107,7 @@ export default function UrlListTable() {
                       const curRowcurColValue = row[column.id]
 
                       // <TODO>Bad Hack: remove later - make parameterized</TODO>
-                      if (column.id === 'shortUrl') {
+                      {/* if (column.id === 'shortUrl') {
                         return (
                           <TableCell key={column.id} align={column.align}>
                             <span className='shortUrlId'>
@@ -117,7 +117,7 @@ export default function UrlListTable() {
                             </span>
                           </TableCell>
                         )
-                      }
+                      } */}
 
                       return (
                         <TableCell key={column.id} align={column.align}>

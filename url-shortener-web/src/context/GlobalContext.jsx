@@ -31,10 +31,14 @@ export const GlobalProvider = ({ children }) => {
     try {
       const response = await axios.post(
         `${API_BASE_URI}/shorten`,
-        longUrl,
+        { longUrl: longUrl },
         POST_REQUEST_COFIG
       )
-    } catch (error) {}
+
+      _dispatchAction(ACTION_TYPES.SHORTEN_URL, response.data.data)
+    } catch (error) {
+      _dispatchAction(ACTION_TYPES.URL_ERROR, error)
+    }
   }
 
   // Get all Shortened Urls so far

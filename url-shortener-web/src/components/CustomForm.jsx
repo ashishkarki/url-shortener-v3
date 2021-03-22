@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import {
   Card,
   CardContent,
@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import LongUrl from './LongUrl'
+import { GlobalContext } from '../context/GlobalContext'
 
 const useStyles = makeStyles({
   card: {
@@ -25,13 +26,26 @@ const useStyles = makeStyles({
 
 function CustomForm() {
   const classes = useStyles()
+  const [longUrl, setLongUrl] = useState('')
+  const { getShortenedUrl } = useContext(GlobalContext)
+
+  const shortenUrl = e => {
+    e.preventDefault()
+
+    getShortenedUrl(longUrl)
+  }
 
   return (
     <Card className={classes.card}>
       <CardContent>
         <FormControl>
           <InputLabel htmlFor='my-input'>Enter Long Url</InputLabel>
-          <Input id='my-input' aria-describedby='my-helper-text' />
+          <Input
+            id='my-input'
+            aria-describedby='my-helper-text'
+            value={longUrl}
+            onChange={e => setLongUrl(e.target.value)}
+          />
           <FormHelperText id='my-helper-text' style={{ margin: '1rem auto' }}>
             Press Enter or Click Button below
           </FormHelperText>
@@ -39,7 +53,7 @@ function CustomForm() {
           <Button
             variant='contained'
             color='secondary'
-            onClick={e => console.log(e)}
+            onClick={e => shortenUrl(e)}
           >
             Shorten Url
           </Button>

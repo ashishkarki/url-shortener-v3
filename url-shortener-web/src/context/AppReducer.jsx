@@ -9,6 +9,13 @@ const AppReducer = (state, action) => {
         urls: action.payload,
       }
 
+    case ACTION_TYPES.SHORTEN_URL:
+      return {
+        ...state,
+        loading: false,
+        urls: [action.payload, ...state.urls],
+      }
+
     case ACTION_TYPES.DELETE_URL:
       return {
         ...state,
