@@ -41,7 +41,8 @@ Keep in mind, we have two apps within the whole app: a react frontend and a expr
 ```
 
 4. Basically, as you might see, the connection to DB went haywire. In this particular case, our Mongoose ODM/tool tried connect to a DB, any DB but we have so far not provided it any any connection-string/db-uri/db-address/whatever.
-5. Listen up!!. This is the most important and slightly tedious part of getting the app running. If you properly read the Database sub-section of the Tech Stack section above, you know that we are using MongoDB Atlas for our DB needs. That is we have not used any local installation of DB (this is entirely possible especially if the local DB is MongoDB). Please follow the steps directly below to get Atlas configured.
+
+5. <div style="color:salmon">Listen up!!. This is the most important and slightly tedious part of getting the app running. If you properly read the Database sub-section of the Tech Stack section above, you know that we are using MongoDB Atlas for our DB needs. That is we have not used any local installation of DB (this is entirely possible especially if the local DB is MongoDB). Please follow the steps directly below to get Atlas configured.
 
    i. If required, register for Atlas here: https://www.mongodb.com/cloud/atlas.
 
@@ -57,7 +58,9 @@ Keep in mind, we have two apps within the whole app: a react frontend and a expr
 
    > mongodb+srv://<username>:<password>@my-clustername.mongodb.net/<myFirstDatabase>?retryWrites=true&w=majority
 
-6. Now you have the connection-string, you need to plop it into one of your `config` package based configuration files with a unique key and the string as the value. Again few things are involved:
+   </div>
+
+6. <div style="color:lightpink">Now you have the connection-string, you need to plop it into one of your `config` package based configuration files with a unique key and the string as the value. Again few things are involved:
 
    i. Create a directory named `config` directly under the root directory. All configuration files with be kept in this directory. The config package expects a `default.json` file to provide details. A sample file looks like this
 
@@ -72,8 +75,24 @@ Keep in mind, we have two apps within the whole app: a react frontend and a expr
 
    iii. The `baseUrl` key is set to localhost:5000 as that is the port where we want to run our express server locally. Feel free to change the port but beware there might be changes need elsewhere.
 
-   iv. A key, in this case named `mongoUri`, stores the connection string to our Atlas based DB.
+   iv. A key, in this case named `mongoUri`, stores the connection string to our Atlas based DB. Now, in this sample and a good practice is to keep this empty in the default.json file as you might have other general defaults that you might want to share with other developers and hence push this file to a remote repository. Exposing your connection string openly online is not safest practice.
 
-## <u></u>
+   v. <u>This is what you do: </u> create another json file (and more as required) mimicing the structure of default.json which store specific environment related information such as connection strings. If your node.js's development environment is named `development`, use that name to create a `development.json` file and paste the connection string from above as a value to the `mongoUri` key. ENSURE THIS FILE IS GIT IGNORED AND NOT COMMITED AND PUSHED TO REMOTE.
 
-## <u></u>
+   vi. Check out the `dev` script in the root/express's package.json file. Notice a piece of code like so `npx cross-env NODE_ENV=development nodemon server`. What this does is it uses a npm package called `cross-env` to set our `NODE-ENV` to `development`. UPDATE THIS NODE_ENV TO WHICHEVER ENVIRONMENT AND CORRESPONDINLY NAMED config/<environment-name>.json file you are intending to use.
+   </div>
+
+## <u>Further and Future work</u>
+
+There are can be a big bucket list but some of the more important ones to make the app more practical and useful are follows:
+
+1. Making the server-side code more modular. Right most of the logic sits in the `server.js` file. Plan to create routes and controllers like struture to modularize the code.
+2. A possible, although optional, UI component could be one that takes in any short url and gives back its corresponding long/original url. I have skipped this part for now as the app provides option to copy (with a button click) the shortened url for the current input. Plus, there is a URL table that lists all the urls with their short form and options to launch them and delete them individually.
+3. Implement loading functionality wherein we show progress icons whenever a backend request is ongoing.
+4. The long-url to short-url form currently doesn't submit on submit via something like pressing the Enter key. The same effect is achieved perfectly via the `Shorten Url` button click. However, form submission is good feature to have.
+
+## <u>Feedback and Contact</u>
+
+Please feel free to suggest updates and fixes.
+
+View my linkedin at https://www.linkedin.com/in/ashish-karki.
