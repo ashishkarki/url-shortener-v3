@@ -11,6 +11,8 @@ import {
 import { ACTION_TYPES } from './Actions'
 import { useCallback } from 'react'
 
+const validUrl = require('valid-url')
+
 const initialState = {
   urls: [
     {
@@ -34,8 +36,33 @@ export const GlobalProvider = ({ children }) => {
   const [globalState, dispatch] = useReducer(AppReducer, initialState)
 
   // Dispatch Actions below:
+  const dispatchAction = (
+    actionType = ACTION_TYPES.NONE,
+    actionPayload = {}
+  ) => {
+    dispatch({
+      type: actionType,
+      payload: actionPayload,
+    })
+  }
+
+  const dispatchToastAction = useCallback(
+    (toastMessage = 'Info', toastType = TOAST_TYPES.DEFAULT) => {
+      dispatchAction(ACTION_TYPES.SHOW_TOAST, {
+        toastMessage: `${toastMessage}%${Date.now()}`,
+        toastType: toastType,
+      })
+    },
+    []
+  )
+
   const getShortenedUrl = async longUrl => {
     try {
+      // Check if this is a valid URI
+      if (!validUrl.isWebUri(longUrl)) {
+        throw new Error(`URL is Invalid!!. Please enter well-formed URL.`)
+      }
+
       const response = await axios.post(
         `${API_BASE_URI}/shorten`,
         { longUrl: longUrl },
@@ -49,10 +76,22 @@ export const GlobalProvider = ({ children }) => {
         TOAST_TYPES.SUCCESS
       )
     } catch (error) {
-      dispatchAction(ACTION_TYPES.URL_ERROR, error.response.data.error)
+      let errorMsg = 'Error'
+
+      if (error.hasOwnProperty('message')) {
+        errorMsg = error.message
+      } else if (
+        error.response &&
+        error.response.data &&
+        error.response.data.error
+      ) {
+        errorMsg = error.response.data.error
+      }
+
+      dispatchAction(ACTION_TYPES.URL_ERROR, errorMsg)
 
       dispatchToastAction(
-        `${TOAST_MESSAGES.SHORT_URL_DISPLAY.SHORTEN_ERROR}: ${error.response.data.error}`,
+        `${TOAST_MESSAGES.SHORT_URL_DISPLAY.SHORTEN_ERROR}: ${errorMsg}`,
         TOAST_TYPES.ERROR
       )
     }
@@ -72,7 +111,7 @@ export const GlobalProvider = ({ children }) => {
         TOAST_TYPES.ERROR
       )
     }
-  }, [])
+  }, [dispatchToastAction])
 
   const deleteUrl = async deletedId => {
     try {
@@ -92,26 +131,6 @@ export const GlobalProvider = ({ children }) => {
         TOAST_TYPES.ERROR
       )
     }
-  }
-
-  const dispatchAction = (
-    actionType = ACTION_TYPES.NONE,
-    actionPayload = {}
-  ) => {
-    dispatch({
-      type: actionType,
-      payload: actionPayload,
-    })
-  }
-
-  const dispatchToastAction = (
-    toastMessage = 'Info',
-    toastType = TOAST_TYPES.DEFAULT
-  ) => {
-    dispatchAction(ACTION_TYPES.SHOW_TOAST, {
-      toastMessage: `${toastMessage}%${Date.now()}`,
-      toastType: toastType,
-    })
   }
 
   return (

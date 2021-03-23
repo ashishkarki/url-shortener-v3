@@ -18,12 +18,14 @@ const TOAST_MESSAGES = {
     COPY_ERROR: 'Error copying to Clipboard!',
     SHORTEN_SUCCESS: 'Short Url Creation Success!',
     SHORTEN_ERROR: 'Short Url Creation Error!',
+    INVALID_URL: 'URL is Invalid!!. Please enter well-formed URL.',
   },
   URL_LIST_TABLE: {
     GET_ALL_URLS_ERROR: `Something prevented us from pulling all existing Urls`,
     DELETE_SUCCESS: `Url Row Entry Deleted!`,
     DELETE_ERROR: `Error Deleting Url Entry!`,
   },
+  NONE: 'No Message Specified!',
 }
 
 module.exports = {
