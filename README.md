@@ -30,6 +30,7 @@ c). <u>Database:</u> we have utilized `MongoDB Atlas` which a (cloud-based) Data
 
 Keep in mind, we have two apps within the whole app: a react frontend and a express backend. Fear not!! The process of running the app has been made butter-smooth. Let's get started:
 
+0. The step zero of any node/npm app, is executing npm i at both levels: root level and then inside the /url-shortener-web level.
 1. The easiest way to get started is executing the command `npm run dev` from the project's root. This will run both the frontend/client and the backend/server concurrently. You can then access the application webpage/frontend at the web address `http://localhost:3000`.
 2. Go on, give it shot.
 3. Things got weird, didn't it? If you look at the node/server/express/whatever console/command-line-tool, you see any error similar to this -
