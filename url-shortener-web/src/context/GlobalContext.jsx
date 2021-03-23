@@ -98,14 +98,10 @@ export const GlobalProvider = ({ children }) => {
     } catch (error) {
       let errorMsg = 'Error'
 
-      if (error.hasOwnProperty('message')) {
-        errorMsg = error.message
-      } else if (
-        error.response &&
-        error.response.data &&
-        error.response.data.error
-      ) {
+      if (error.response && error.response.data && error.response.data.error) {
         errorMsg = error.response.data.error
+      } else if (error.hasOwnProperty('message')) {
+        errorMsg = error.message
       }
 
       dispatchAction(ACTION_TYPES.URL_ERROR, errorMsg)

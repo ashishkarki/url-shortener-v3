@@ -133,10 +133,10 @@ const buildSuccessResponse = (res, responseData, statusCode = 200) => {
   return res.status(statusCode).json(responseObj)
 }
 
-const buildErrorResponse = (res, error, statusCode = 500) => {
+const buildErrorResponse = (res, err, statusCode = 500) => {
   return res.status(statusCode).json({
     success: false,
-    error: `${error.message}`,
+    error: `${err.message}`,
   })
 }
 
