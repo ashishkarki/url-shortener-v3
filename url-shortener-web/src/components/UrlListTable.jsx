@@ -106,19 +106,6 @@ export default function UrlListTable() {
                     {columns.map(column => {
                       const curRowcurColValue = row[column.id]
 
-                      // <TODO>Bad Hack: remove later - make parameterized</TODO>
-                      {/* if (column.id === 'shortUrl') {
-                        return (
-                          <TableCell key={column.id} align={column.align}>
-                            <span className='shortUrlId'>
-                              {curRowcurColValue.substring(
-                                curRowcurColValue.lastIndexOf('/') + 1
-                              )}
-                            </span>
-                          </TableCell>
-                        )
-                      } */}
-
                       return (
                         <TableCell key={column.id} align={column.align}>
                           {column.format &&

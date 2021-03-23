@@ -21,6 +21,9 @@ const useStyles = makeStyles({
     color: '#c71b68',
     textAlign: 'center',
     margin: '1rem',
+
+    overflowWrap: 'break-word',
+    wordBreak: 'break-all',
   },
 })
 
