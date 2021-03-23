@@ -86,10 +86,9 @@ app.post(`${API_BASE_URI}/shorten`, async (req, res) => {
     const existingUrl = await Url.findOne({ longUrl: longUrl })
 
     if (existingUrl) {
-      return buildSuccessResponse(
-        res,
-        `LongUrl already converted at timestamp: ${existingUrl.createdAt}`
-      )
+      return buildErrorResponse(res, {
+        message: `LongUrl already converted at timestamp: ${existingUrl.createdAt}`,
+      })
     }
 
     const urlObjWithoutShortUrl = await Url.create({ longUrl: longUrl })

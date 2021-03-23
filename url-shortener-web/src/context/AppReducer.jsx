@@ -23,6 +23,13 @@ const AppReducer = (state, action) => {
         urls: state.urls.filter(url => url._id !== action.payload),
       }
 
+    case ACTION_TYPES.SHOW_TOAST:
+      return {
+        ...state,
+        toastMessage: action.payload.toastMessage,
+        toastType: action.payload.toastType,
+      }
+
     case ACTION_TYPES.URL_ERROR:
       return {
         ...state,

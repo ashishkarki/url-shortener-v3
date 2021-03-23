@@ -2,7 +2,11 @@ import { useReducer } from 'react'
 import { createContext } from 'react'
 import axios from 'axios'
 import AppReducer from './AppReducer'
-import { API_BASE_URI, POST_REQUEST_COFIG } from '../utils/constants'
+import {
+  API_BASE_URI,
+  POST_REQUEST_COFIG,
+  TOAST_TYPES,
+} from '../utils/constants'
 import { ACTION_TYPES } from './Actions'
 import { useCallback } from 'react'
 
@@ -16,6 +20,8 @@ const initialState = {
     },
   ],
   recentShortUrl: '',
+  toastMessage: '',
+  toastType: TOAST_TYPES.DEFAULT,
   error: null,
   loading: true,
 }
@@ -35,9 +41,9 @@ export const GlobalProvider = ({ children }) => {
         POST_REQUEST_COFIG
       )
 
-      _dispatchAction(ACTION_TYPES.SHORTEN_URL, response.data.data)
+      dispatchAction(ACTION_TYPES.SHORTEN_URL, response.data.data)
     } catch (error) {
-      _dispatchAction(ACTION_TYPES.URL_ERROR, error)
+      dispatchAction(ACTION_TYPES.URL_ERROR, error)
     }
   }
 
@@ -46,9 +52,9 @@ export const GlobalProvider = ({ children }) => {
     try {
       const response = await axios.get(API_BASE_URI)
 
-      _dispatchAction(ACTION_TYPES.GET_URLS, response.data.data)
+      dispatchAction(ACTION_TYPES.GET_URLS, response.data.data)
     } catch (error) {
-      _dispatchAction(ACTION_TYPES.URL_ERROR, error)
+      dispatchAction(ACTION_TYPES.URL_ERROR, error)
     }
   }, [])
 
@@ -56,13 +62,13 @@ export const GlobalProvider = ({ children }) => {
     try {
       const response = await axios.delete(`${API_BASE_URI}/${deletedId}`)
 
-      _dispatchAction(ACTION_TYPES.DELETE_URL, response.data.data)
+      dispatchAction(ACTION_TYPES.DELETE_URL, response.data.data)
     } catch (error) {
-      _dispatchAction(ACTION_TYPES.URL_ERROR, error)
+      dispatchAction(ACTION_TYPES.URL_ERROR, error)
     }
   }
 
-  const _dispatchAction = (
+  const dispatchAction = (
     actionType = ACTION_TYPES.NONE,
     actionPayload = {}
   ) => {
@@ -76,7 +82,10 @@ export const GlobalProvider = ({ children }) => {
     <GlobalContext.Provider
       value={{
         urls: globalState.urls,
+        toastMessage: globalState.toastMessage,
+        toastType: globalState.toastType,
         recentShortUrl: globalState.recentShortUrl,
+        dispatchAction,
         getShortenedUrl,
         deleteUrl,
         getUrls,

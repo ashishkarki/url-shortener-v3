@@ -3,5 +3,6 @@ export const ACTION_TYPES = {
   URL_ERROR: 'Error in loading url',
   SHORTEN_URL: 'Shorten a new long url',
   DELETE_URL: 'Delete one, specifed url entry',
+  SHOW_TOAST: 'Show a toast message',
   NONE: 'No action specified',
 }

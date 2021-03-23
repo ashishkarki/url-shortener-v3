@@ -6,7 +6,14 @@ const POST_REQUEST_COFIG = {
   },
 }
 
+const TOAST_TYPES = {
+  SUCCESS: 'Sucess Message',
+  ERROR: 'Some error Message',
+  DEFAULT: '',
+}
+
 module.exports = {
   API_BASE_URI,
   POST_REQUEST_COFIG,
+  TOAST_TYPES,
 }

@@ -1,6 +1,7 @@
 import React from 'react'
 import { CardHeader, Typography, Link } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
+import { Toaster } from './Toaster'
 
 const useStyles = makeStyles({
   header: {
@@ -45,6 +46,7 @@ function CustomHeader() {
             </Link>
           </Typography>
         }
+        action={<Toaster />}
       />
     </>
   )
