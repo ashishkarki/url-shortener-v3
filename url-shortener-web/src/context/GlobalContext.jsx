@@ -5,6 +5,7 @@ import AppReducer from './AppReducer'
 import {
   API_BASE_URI,
   POST_REQUEST_COFIG,
+  TOAST_MESSAGES,
   TOAST_TYPES,
 } from '../utils/constants'
 import { ACTION_TYPES } from './Actions'
@@ -42,8 +43,18 @@ export const GlobalProvider = ({ children }) => {
       )
 
       dispatchAction(ACTION_TYPES.SHORTEN_URL, response.data.data)
+
+      dispatchToastAction(
+        `${TOAST_MESSAGES.SHORT_URL_DISPLAY.SHORTEN_SUCCESS}`,
+        TOAST_TYPES.SUCCESS
+      )
     } catch (error) {
-      dispatchAction(ACTION_TYPES.URL_ERROR, error)
+      dispatchAction(ACTION_TYPES.URL_ERROR, error.response.data.error)
+
+      dispatchToastAction(
+        `${TOAST_MESSAGES.SHORT_URL_DISPLAY.SHORTEN_ERROR}: ${error.response.data.error}`,
+        TOAST_TYPES.ERROR
+      )
     }
   }
 
@@ -54,7 +65,12 @@ export const GlobalProvider = ({ children }) => {
 
       dispatchAction(ACTION_TYPES.GET_URLS, response.data.data)
     } catch (error) {
-      dispatchAction(ACTION_TYPES.URL_ERROR, error)
+      dispatchAction(ACTION_TYPES.URL_ERROR, error.response.data.error)
+
+      dispatchToastAction(
+        `${TOAST_MESSAGES.URL_LIST_TABLE.GET_ALL_URLS_ERROR}`,
+        TOAST_TYPES.ERROR
+      )
     }
   }, [])
 
@@ -64,12 +80,17 @@ export const GlobalProvider = ({ children }) => {
 
       dispatchAction(ACTION_TYPES.DELETE_URL, response.data.data)
 
-      dispatchAction(ACTION_TYPES.SHOW_TOAST, {
-        toastMessage: `Short Url Copied to Clipboard! %${Date.now()}`, // timestamp is a hack to show toasts everytime copy button is clicked
-        toastType: TOAST_TYPES.SUCCESS,
-      })
+      dispatchToastAction(
+        TOAST_MESSAGES.URL_LIST_TABLE.DELETE_SUCCESS,
+        TOAST_TYPES.SUCCESS
+      )
     } catch (error) {
-      dispatchAction(ACTION_TYPES.URL_ERROR, error)
+      dispatchAction(ACTION_TYPES.URL_ERROR, error.response.data.error)
+
+      dispatchToastAction(
+        TOAST_MESSAGES.URL_LIST_TABLE.DELETE_ERROR,
+        TOAST_TYPES.ERROR
+      )
     }
   }
 
