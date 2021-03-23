@@ -38,6 +38,12 @@ function CustomForm() {
     getShortenedUrl(longUrl)
   }
 
+  const clearLongUrlInput = e => {
+    e.preventDefault()
+
+    setLongUrl('')
+  }
+
   return (
     <Card className={classes.card}>
       <CardContent>
@@ -55,10 +61,20 @@ function CustomForm() {
 
           <Button
             variant='contained'
-            color='secondary'
+            color='primary'
             onClick={e => shortenUrl(e)}
+            style={{ margin: '0.2rem auto' }}
           >
             Shorten Url
+          </Button>
+
+          <Button
+            variant='outlined'
+            color='secondary'
+            onClick={e => clearLongUrlInput(e)}
+            style={{ margin: '0.2rem auto' }}
+          >
+            Clear Input
           </Button>
 
           <ShortUrlDisplay />

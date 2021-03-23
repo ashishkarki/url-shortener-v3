@@ -55,17 +55,7 @@ export const GlobalProvider = ({ children }) => {
     []
   )
 
-  useEffect(() => {
-    const source = axios.CancelToken.source()
-
-    getBaseUrl()
-
-    return () => {
-      source.cancel()
-    }
-  })
-
-  const getBaseUrl = async () => {
+  const getBaseUrl = useCallback(async () => {
     try {
       const response = await axios.get(`${API_BASE_URI}/api_base_uri`)
 
@@ -74,7 +64,17 @@ export const GlobalProvider = ({ children }) => {
       // send a fall back url
       dispatchAction(ACTION_TYPES.GET_BASE_URL_ERROR, error.response.data.error)
     }
-  }
+  }, [])
+
+  useEffect(() => {
+    const source = axios.CancelToken.source()
+
+    getBaseUrl()
+
+    return () => {
+      source.cancel()
+    }
+  }, [getBaseUrl])
 
   const getShortenedUrl = async longUrl => {
     try {
