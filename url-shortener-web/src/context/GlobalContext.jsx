@@ -1,5 +1,4 @@
-import { useReducer } from 'react'
-import { createContext } from 'react'
+import { useEffect, createContext, useCallback, useReducer } from 'react'
 import axios from 'axios'
 import AppReducer from './AppReducer'
 import {
@@ -9,7 +8,6 @@ import {
   TOAST_TYPES,
 } from '../utils/constants'
 import { ACTION_TYPES } from './Actions'
-import { useCallback } from 'react'
 
 const validUrl = require('valid-url')
 
@@ -22,6 +20,7 @@ const initialState = {
       urlId: '75RT509uEB',
     },
   ],
+  baseUrl: '',
   recentShortUrl: '',
   toastMessage: '',
   toastType: TOAST_TYPES.DEFAULT,
@@ -55,6 +54,27 @@ export const GlobalProvider = ({ children }) => {
     },
     []
   )
+
+  useEffect(() => {
+    const source = axios.CancelToken.source()
+
+    getBaseUrl()
+
+    return () => {
+      source.cancel()
+    }
+  })
+
+  const getBaseUrl = async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URI}/api_base_uri`)
+
+      dispatchAction(ACTION_TYPES.GET_BASE_URL, response.data.data)
+    } catch (error) {
+      // send a fall back url
+      dispatchAction(ACTION_TYPES.GET_BASE_URL_ERROR, error.response.data.error)
+    }
+  }
 
   const getShortenedUrl = async longUrl => {
     try {
@@ -140,6 +160,7 @@ export const GlobalProvider = ({ children }) => {
         toastMessage: globalState.toastMessage,
         toastType: globalState.toastType,
         recentShortUrl: globalState.recentShortUrl,
+        baseUrl: globalState.baseUrl,
 
         dispatchToastAction,
         getShortenedUrl,

@@ -34,6 +34,14 @@ app.get(`${API_BASE_URI}/`, async (_, res) => {
 })
 
 /**
+ * Description: get a list of all Shortened URLs`
+ * Route: GET /api/v3/urls/
+ */
+app.get(`${API_BASE_URI}/api_base_uri`, async (_, res) => {
+  return buildSuccessResponse(res, BASE_URL)
+})
+
+/**
  * Description: get/redirect the client to corresponding longUrl
  * Route: GET /api/v3/urls/:shortUrl/lengthen
  */
@@ -42,8 +50,8 @@ app.get(`${API_BASE_URI}/:shortUrl/lengthen`, async (req, res) => {
     const { shortUrl } = req.params
     const url = await Url.findOne({ urlId: shortUrl })
 
-    return buildSuccessResponse(res, url.longUrl)
-    //res.redirect(url.longUrl)
+    //return buildSuccessResponse(res, url.longUrl)
+    res.redirect(url.longUrl)
   } catch (error) {
     return buildErrorResponse(res, error)
   }

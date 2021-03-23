@@ -30,7 +30,7 @@ const useStyles = makeStyles({
 function CustomForm() {
   const classes = useStyles()
   const [longUrl, setLongUrl] = useState('')
-  const { getShortenedUrl, loading } = useContext(GlobalContext)
+  const { getShortenedUrl } = useContext(GlobalContext)
 
   const shortenUrl = e => {
     e.preventDefault()

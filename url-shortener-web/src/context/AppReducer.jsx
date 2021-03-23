@@ -17,6 +17,18 @@ const AppReducer = (state, action) => {
         recentShortUrl: action.payload.shortUrl,
       }
 
+    case ACTION_TYPES.GET_BASE_URL:
+      return {
+        ...state,
+        baseUrl: action.payload,
+      }
+
+    case ACTION_TYPES.GET_BASE_URL_ERROR:
+      return {
+        ...state,
+        baseUrl: 'http://localhost:5000',
+      }
+
     case ACTION_TYPES.DELETE_URL:
       return {
         ...state,
