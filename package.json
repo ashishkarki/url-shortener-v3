@@ -5,7 +5,9 @@
   "main": "server",
   "scripts": {
     "start": "node server",
-    "serve": "nodemon server"
+    "serve": "nodemon server",
+    "client": "npm start --prefix url-shortener-web",
+    "dev": "concurrently \"npx cross-env NODE_ENV=development nodemon server\" \"npm run client\""
   },
   "keywords": [
     "node",
