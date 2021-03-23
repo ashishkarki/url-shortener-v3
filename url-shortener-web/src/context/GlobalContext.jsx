@@ -63,6 +63,11 @@ export const GlobalProvider = ({ children }) => {
       const response = await axios.delete(`${API_BASE_URI}/${deletedId}`)
 
       dispatchAction(ACTION_TYPES.DELETE_URL, response.data.data)
+
+      dispatchAction(ACTION_TYPES.SHOW_TOAST, {
+        toastMessage: `Short Url Copied to Clipboard! %${Date.now()}`, // timestamp is a hack to show toasts everytime copy button is clicked
+        toastType: TOAST_TYPES.SUCCESS,
+      })
     } catch (error) {
       dispatchAction(ACTION_TYPES.URL_ERROR, error)
     }
@@ -78,6 +83,16 @@ export const GlobalProvider = ({ children }) => {
     })
   }
 
+  const dispatchToastAction = (
+    toastMessage = 'Info',
+    toastType = TOAST_TYPES.DEFAULT
+  ) => {
+    dispatchAction(ACTION_TYPES.SHOW_TOAST, {
+      toastMessage: `${toastMessage}%${Date.now()}`,
+      toastType: toastType,
+    })
+  }
+
   return (
     <GlobalContext.Provider
       value={{
@@ -85,7 +100,8 @@ export const GlobalProvider = ({ children }) => {
         toastMessage: globalState.toastMessage,
         toastType: globalState.toastType,
         recentShortUrl: globalState.recentShortUrl,
-        dispatchAction,
+
+        dispatchToastAction,
         getShortenedUrl,
         deleteUrl,
         getUrls,

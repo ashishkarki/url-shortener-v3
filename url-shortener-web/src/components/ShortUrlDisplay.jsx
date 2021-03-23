@@ -5,8 +5,8 @@ import { useContext } from 'react'
 import { GlobalContext } from '../context/GlobalContext'
 import DoubleArrowIcon from '@material-ui/icons/DoubleArrow'
 import FileCopyIcon from '@material-ui/icons/FileCopy'
-import { ACTION_TYPES } from '../context/Actions'
-import { TOAST_TYPES } from '../utils/constants'
+
+import { TOAST_TYPES, TOAST_MESSAGES } from '../utils/constants'
 
 const useStyles = makeStyles({
   labelHide: {
@@ -26,18 +26,25 @@ const useStyles = makeStyles({
 
 function ShortUrlDisplay() {
   const classes = useStyles()
-  const { recentShortUrl, dispatchAction } = useContext(GlobalContext)
+  const { recentShortUrl, dispatchToastAction } = useContext(GlobalContext)
 
   async function copyToClipboard(text) {
     try {
       await navigator.clipboard.writeText(text)
 
-      dispatchAction(ACTION_TYPES.SHOW_TOAST, {
-        toastMessage: `Short Url Copied to Clipboard!%${Date.now()}`, // timestamp is a hack to show toasts everytime copy button is clicked
-        toastType: TOAST_TYPES.SUCCESS,
-      })
-    } catch (err) {
-      alert('Error in copying text: ', err)
+      // dispatchAction(ACTION_TYPES.SHOW_TOAST, {
+      //   toastMessage: `Short Url Copied to Clipboard! %${Date.now()}`, // timestamp is a hack to show toasts everytime copy button is clicked
+      //   toastType: TOAST_TYPES.SUCCESS,
+      // })
+      dispatchToastAction(
+        TOAST_MESSAGES.SHORT_URL_DISPLAY.COPY_SUCCESS,
+        TOAST_TYPES.SUCCESS
+      )
+    } catch (_) {
+      // dispatchAction(ACTION_TYPES.SHOW_TOAST, {
+      //   toastMessage: `Error in copying to Clipboard! %${Date.now()}`,
+      //   toastType: TOAST_TYPES.SUCCESS,
+      // })
     }
   }
 

@@ -12,8 +12,16 @@ const TOAST_TYPES = {
   DEFAULT: '',
 }
 
+const TOAST_MESSAGES = {
+  SHORT_URL_DISPLAY: {
+    COPY_SUCCESS: 'Short Url Copied to Clipboard!',
+    COPY_ERROR: 'Error in copying to Clipboard!',
+  },
+}
+
 module.exports = {
   API_BASE_URI,
   POST_REQUEST_COFIG,
   TOAST_TYPES,
+  TOAST_MESSAGES,
 }

@@ -8,23 +8,27 @@ export const Toaster = () => {
   const { toastMessage, toastType } = useContext(GlobalContext)
 
   useEffect(() => {
-    let toastMsgWoTs = toastMessage // toast message without timestamp
+    let localToastMsg = toastMessage // toast message without timestamp
 
-    if (toastMsgWoTs && toastMsgWoTs !== '') {
-      const timestampSeparatorIndex = toastMsgWoTs.indexOf('%')
+    if (
+      localToastMsg &&
+      typeof localToastMsg === 'string' &&
+      localToastMsg !== ''
+    ) {
+      const timestampSeparatorIndex = localToastMsg.indexOf('%')
       if (timestampSeparatorIndex > -1) {
-        toastMsgWoTs = toastMsgWoTs.substring(0, timestampSeparatorIndex)
+        localToastMsg = localToastMsg.substring(0, timestampSeparatorIndex)
       }
 
       switch (toastType) {
         case TOAST_TYPES.SUCCESS:
-          toast.info(toastMsgWoTs)
+          toast.info(localToastMsg)
           break
         case TOAST_TYPES.ERROR:
-          toast.error(toastMsgWoTs)
+          toast.error(localToastMsg)
           break
         default:
-          toast(toastMsgWoTs)
+          toast(localToastMsg)
           break
       }
     }
