@@ -7,7 +7,8 @@
     "start": "node server",
     "serve": "nodemon server",
     "client": "npm start --prefix url-shortener-web",
-    "dev": "concurrently \"npx cross-env NODE_ENV=development nodemon server\" \"npm run client\""
+    "dev": "concurrently \"npx cross-env NODE_ENV=development nodemon server\" \"npm run client\"",
+    "test": "snyk test"
   },
   "keywords": [
     "node",
@@ -21,11 +22,13 @@
     "colors": "^1.4.0",
     "config": "^3.3.6",
     "express": "^4.17.1",
-    "mongoose": "^5.12.1",
+    "helmet": "^4.4.1",
+    "mongoose": "^5.12.2",
     "nanoid": "^3.1.22"
   },
   "devDependencies": {
     "concurrently": "^6.0.0",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "snyk": "^1.509.0"
   }
 }

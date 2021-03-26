@@ -1,6 +1,7 @@
 const express = require('express')
 const colors = require('colors')
 const config = require('config')
+const helmet = require('helmet')
 
 const BASE_URL = config.get('baseUrl')
 
@@ -16,6 +17,10 @@ const connectToDB = require('./config/db-connect')
 connectToDB()
 
 const app = express()
+
+// helmet headers middleware
+app.use(helmet())
+
 // body parser middleware
 app.use(express.json())
 

@@ -1,0 +1,12 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.19.0
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  SNYK-JS-LODASHTEMPLATE-1088054:
+    - react-scripts > postcss-preset-env > postcss-initial > lodash.template:
+        reason: None given
+        expires: '2021-04-25T07:21:42.162Z'
+    - react-scripts > workbox-webpack-plugin > workbox-build > lodash.template:
+        reason: None given
+        expires: '2021-04-25T07:21:42.163Z'
+patch: {}
