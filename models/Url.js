@@ -13,7 +13,7 @@ const UrlSchema = new mongoose.Schema({
   urlId: {
     type: String,
     required: true,
-    default: nanoid(10),
+    default: () => nanoid(10),
   },
   createdAt: {
     type: Date,
