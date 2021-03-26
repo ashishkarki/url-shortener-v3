@@ -11,6 +11,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles'
 import ShortUrlDisplay from './ShortUrlDisplay'
 import { GlobalContext } from '../context/GlobalContext'
+import CustomProgressDisplay from './CustomProgressDisplay'
 
 const useStyles = makeStyles({
   card: {
@@ -30,7 +31,7 @@ const useStyles = makeStyles({
 function CustomForm() {
   const classes = useStyles()
   const [longUrl, setLongUrl] = useState('')
-  const { getShortenedUrl } = useContext(GlobalContext)
+  const { loading, getShortenedUrl } = useContext(GlobalContext)
 
   const shortenUrl = e => {
     e.preventDefault()
@@ -66,7 +67,7 @@ function CustomForm() {
               onClick={e => shortenUrl(e)}
               style={{ margin: '0.2rem auto' }}
             >
-              Shorten Url
+              {loading ? <CustomProgressDisplay /> : 'Shorten Url'}
             </Button>
 
             <Button
