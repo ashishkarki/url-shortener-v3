@@ -7,5 +7,7 @@ export const ACTION_TYPES = {
   DELETE_URL: 'Delete one, specifed url entry',
   CLEAR_ALL_URLS: 'Clear out the long and short urls',
   SHOW_TOAST: 'Show a toast message',
+  SET_LOADING: 'Set Loading to true',
+  UNSET_LOADING: 'Set Loading to false',
   NONE: 'No action specified',
 }

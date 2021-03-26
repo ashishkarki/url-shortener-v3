@@ -2,6 +2,18 @@ import { ACTION_TYPES } from './Actions'
 
 const AppReducer = (state, action) => {
   switch (action.type) {
+    case ACTION_TYPES.SET_LOADING:
+      return {
+        ...state,
+        loading: true,
+      }
+
+    case ACTION_TYPES.UNSET_LOADING:
+      return {
+        ...state,
+        loading: false,
+      }
+
     case ACTION_TYPES.GET_URLS:
       return {
         ...state,
@@ -12,7 +24,6 @@ const AppReducer = (state, action) => {
     case ACTION_TYPES.SHORTEN_URL:
       return {
         ...state,
-        loading: false,
         urls: [action.payload, ...state.urls],
         recentShortUrl: action.payload.shortUrl,
       }
@@ -46,6 +57,7 @@ const AppReducer = (state, action) => {
       return {
         ...state,
         error: action.payload,
+        loading: false,
       }
 
     default:

@@ -83,6 +83,8 @@ export const GlobalProvider = ({ children }) => {
         throw new Error(`URL is Invalid!!. Please enter well-formed URL.`)
       }
 
+      dispatchAction(ACTION_TYPES.SET_LOADING)
+
       const response = await axios.post(
         `${API_BASE_URI}/shorten`,
         { longUrl: longUrl },
@@ -90,6 +92,8 @@ export const GlobalProvider = ({ children }) => {
       )
 
       dispatchAction(ACTION_TYPES.SHORTEN_URL, response.data.data)
+
+      dispatchAction(ACTION_TYPES.UNSET_LOADING)
 
       dispatchToastAction(
         `${TOAST_MESSAGES.SHORT_URL_DISPLAY.SHORTEN_SUCCESS}`,
@@ -157,6 +161,7 @@ export const GlobalProvider = ({ children }) => {
         toastType: globalState.toastType,
         recentShortUrl: globalState.recentShortUrl,
         baseUrl: globalState.baseUrl,
+        loading: globalState.loading,
 
         dispatchToastAction,
         getShortenedUrl,

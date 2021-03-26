@@ -17,7 +17,7 @@ import LaunchIcon from '@material-ui/icons/Launch'
 
 const columns = [
   { id: 'longUrl', label: 'Long Url' }, //, minWidth: 170
-  { id: 'shortUrl', label: 'Shortened Url ID' }, //, minWidth: 100
+  { id: 'shortUrl', label: 'Shortened Url' }, //, minWidth: 100
   { id: 'createdAt', label: 'Date Created' },
 ]
 

@@ -11,6 +11,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles'
 import ShortUrlDisplay from './ShortUrlDisplay'
 import { GlobalContext } from '../context/GlobalContext'
+import CustomProgressDisplay from './CustomProgressDisplay'
 
 const useStyles = makeStyles({
   card: {
@@ -30,7 +31,7 @@ const useStyles = makeStyles({
 function CustomForm() {
   const classes = useStyles()
   const [longUrl, setLongUrl] = useState('')
-  const { getShortenedUrl } = useContext(GlobalContext)
+  const { loading, getShortenedUrl } = useContext(GlobalContext)
 
   const shortenUrl = e => {
     e.preventDefault()
@@ -45,42 +46,44 @@ function CustomForm() {
   }
 
   return (
-    <Card className={classes.card}>
-      <CardContent>
-        <FormControl>
-          <InputLabel htmlFor='my-input'>Enter Long Url</InputLabel>
-          <Input
-            id='my-input'
-            aria-describedby='my-helper-text'
-            value={longUrl}
-            onChange={e => setLongUrl(e.target.value)}
-          />
-          <FormHelperText id='my-helper-text' style={{ margin: '1rem auto' }}>
-            Press Enter or Click Button below
-          </FormHelperText>
+    <form onSubmit={e => shortenUrl(e)}>
+      <Card className={classes.card}>
+        <CardContent>
+          <FormControl>
+            <InputLabel htmlFor='my-input'>Enter Long Url</InputLabel>
+            <Input
+              id='my-input'
+              aria-describedby='my-helper-text'
+              value={longUrl}
+              onChange={e => setLongUrl(e.target.value)}
+            />
+            <FormHelperText id='my-helper-text' style={{ margin: '1rem auto' }}>
+              Press Enter or Click Button below
+            </FormHelperText>
 
-          <Button
-            variant='contained'
-            color='primary'
-            onClick={e => shortenUrl(e)}
-            style={{ margin: '0.2rem auto' }}
-          >
-            Shorten Url
-          </Button>
+            <Button
+              variant='contained'
+              color='primary'
+              onClick={e => shortenUrl(e)}
+              style={{ margin: '0.2rem auto' }}
+            >
+              {loading ? <CustomProgressDisplay /> : 'Shorten Url'}
+            </Button>
 
-          <Button
-            variant='outlined'
-            color='secondary'
-            onClick={e => clearLongUrlInput(e)}
-            style={{ margin: '0.2rem auto' }}
-          >
-            Clear Input
-          </Button>
+            <Button
+              variant='outlined'
+              color='secondary'
+              onClick={e => clearLongUrlInput(e)}
+              style={{ margin: '0.2rem auto' }}
+            >
+              Clear Input
+            </Button>
 
-          <ShortUrlDisplay />
-        </FormControl>
-      </CardContent>
-    </Card>
+            <ShortUrlDisplay />
+          </FormControl>
+        </CardContent>
+      </Card>
+    </form>
   )
 }
 
