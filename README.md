@@ -87,10 +87,7 @@ Keep in mind, we have two apps within the whole app: a react frontend and a expr
 
 There are can be a big bucket list but some of the more important ones to make the app more practical and useful are follows:
 
-1. Making the server-side code more modular. Right most of the logic sits in the `server.js` file. Plan to create routes and controllers like struture to modularize the code.
-2. A possible, although optional, UI component could be one that takes in any short url and gives back its corresponding long/original url. I have skipped this part for now as the app provides option to copy (with a button click) the shortened url for the current input. Plus, there is a URL table that lists all the urls with their short form and options to launch them and delete them individually.
-3. Implement loading functionality wherein we show progress icons whenever a backend request is ongoing.
-4. The long-url to short-url form currently doesn't submit on submit via something like pressing the Enter key. The same effect is achieved perfectly via the `Shorten Url` button click. However, form submission is good feature to have.
+1. A possible, although optional, UI component could be one that takes in any short url and gives back its corresponding long/original url. I have skipped this part for now as the app provides option to copy (with a button click) the shortened url for the current input. Plus, there is a URL table that lists all the urls with their short form and options to launch them and delete them individually.
 
 ## <u>Feedback and Contact</u>
 
