@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node server",
     "serve": "nodemon server",
+    "dev_serve": "npx cross-env NODE_ENV=development nodemon server",
     "client": "npm start --prefix url-shortener-web",
     "dev": "concurrently \"npx cross-env NODE_ENV=development nodemon server\" \"npm run client\"",
     "test": "snyk test"
