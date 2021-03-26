@@ -57,6 +57,7 @@ const AppReducer = (state, action) => {
       return {
         ...state,
         error: action.payload,
+        loading: false,
       }
 
     default:
