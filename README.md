@@ -1,4 +1,8 @@
+[![made-with-Markdown](https://img.shields.io/badge/Made%20with-Markdown-1f425f.svg)](http://commonmark.org)
+
 ### Full stack app to facilitate the shortening of long urls.
+
+![Your Repository's Stats](https://github-readme-stats.vercel.app/api?username=ashishkarki&show_icons=true)
 
 ## <u>Introduction: What is this app about?</u>
 
@@ -94,3 +98,6 @@ There are can be a big bucket list but some of the more important ones to make t
 Please feel free to suggest updates and fixes.
 
 View my linkedin at https://www.linkedin.com/in/ashish-karki.
+
+## And 😂 Here is a random joke that'll make you laugh!
+![Jokes Card](https://readme-jokes.vercel.app/api)
