@@ -3,14 +3,11 @@ const colors = require('colors')
 const config = require('config')
 const helmet = require('helmet')
 
-const BASE_URL = config.get('baseUrl')
-
 const {
   NODE_ENV_OPTIONS,
   DEFAULT_SERVER_PORT,
   API_BASE_URI,
 } = require('./utils/constants')
-const Url = require('./models/Url')
 const connectToDB = require('./config/db-connect')
 const urlRoutes = require('./routes/urls')
 

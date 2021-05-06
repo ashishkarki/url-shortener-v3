@@ -1,11 +1,5 @@
 const config = require('config')
 
-const {
-  NODE_ENV_OPTIONS,
-  DEFAULT_SERVER_PORT,
-  API_BASE_URI,
-} = require('../utils/constants')
-
 const Url = require('../models/Url')
 
 const BASE_URL = config.get('baseUrl')
@@ -14,7 +8,7 @@ const BASE_URL = config.get('baseUrl')
  * Description: get a list of all Shortened URLs`
  * Route: GET /api/v3/urls/
  */
-exports.getAllShortenedUrls = async (req, res, next) => {
+exports.getAllShortenedUrls = async (_, res) => {
   try {
     const allShortenedUrls = await Url.find().sort({ createdAt: -1 })
 
@@ -28,11 +22,11 @@ exports.getAllShortenedUrls = async (req, res, next) => {
  * Description: get the constant value of Base url similar to https://<hostname>/
  * Route: GET /api/v3/urls/api_base_uri
  */
-exports.getApiBaseUri = async (req, res, next) => {
+exports.getApiBaseUri = async (_req, res, _next) => {
   return buildSuccessResponse(res, BASE_URL)
 }
 
-/** TODO
+/**
  * Description: get/redirect the client to corresponding longUrl
  * Route: GET /api/v3/urls/:shortUrl/lengthen
  */
@@ -44,7 +38,7 @@ exports.getLongUrl = async (req, res) => {
     //return buildSuccessResponse(res, url.longUrl)
     res.redirect(url.longUrl)
   } catch (error) {
-    return buildErrorResponse(res, error)
+    return buildErrorResponse(res, error, 404)
   }
 }
 

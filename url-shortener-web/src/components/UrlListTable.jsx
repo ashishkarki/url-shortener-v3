@@ -63,6 +63,12 @@ export default function UrlListTable() {
     console.log(`lauch row with id ${longUrl}`)
     const newWindow = window.open(longUrl, '_blank', 'noreferrer')
     if (newWindow) newWindow.opener = null
+    /**
+     * Long form theory of what is happening above:
+     * (source: https://pointjupiter.com/what-noopener-noreferrer-nofollow-explained/)
+     * Similar in its function to noopener, noreferrer also prevents the newly opened site from manipulating the window.opener object. But, additionally, noreferrer prevents browser, when you navigate to another page, to send the referring webpage’s address.
+     * Simply put, the noreferrer value will hide referrer information when the link is clicked. For example, if someone posts your link on their webpage and use the noreferrer, and then users click on that link, you will not be able to tell where did those users come from.
+     */
   }
 
   useEffect(() => {
